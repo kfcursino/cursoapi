@@ -6,6 +6,7 @@ import br.com.karina.api.repositories.UserRepository;
 import br.com.karina.api.services.UserService;
 import br.com.karina.api.services.exceptions.DataIntegratyViolationException;
 import br.com.karina.api.services.exceptions.ObjectNotFoundException;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,15 @@ public class UserServiceImpl implements UserService {
         return repository.save(mapper.map(obj, Users.class));
     }
 
+    @Override
+    public Users update(UsersDTO obj) {
+        findByEmail(obj);
+        return repository.save(mapper.map(obj, Users.class));
+    }
+
     private void findByEmail(UsersDTO obj) {
         Optional<Users> user = repository.findByEmail(obj.getEmail());
-        if(user.isPresent()) {
+        if(user.isPresent() && !user.get().getId().equals(obj.getId())) {
             throw new DataIntegratyViolationException("E-mail já cadastrado no sistema");
         }
     }
