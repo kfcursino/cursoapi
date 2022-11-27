@@ -3,6 +3,7 @@ package br.com.karina.api.services.impl;
 import br.com.karina.api.domain.Users;
 import br.com.karina.api.domain.dto.UsersDTO;
 import br.com.karina.api.repositories.UserRepository;
+import br.com.karina.api.services.exceptions.DataIntegratyViolationException;
 import br.com.karina.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -30,6 +32,7 @@ class UserServiceImplTest {
     public static final String PASSWORD = "123";
     public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
     public static final int INDEX = 0;
+    public static final String EMAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
 
     @InjectMocks
     private UserServiceImpl service;
@@ -105,7 +108,18 @@ class UserServiceImplTest {
         assertEquals(PASSWORD, response.getPassword());
     }
 
+    @Test
+    void whenCreateThenReturnAnDataCreateViolationException() {
+        when(repository.findByEmail(anyString())).thenReturn(optionalUser);
 
+        try {
+            optionalUser.get().setId(2);
+            Users response = service.create(userDTO);
+        } catch (Exception ex) {
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(EMAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
+        }
+    }
 
     @Test
     void update() {
