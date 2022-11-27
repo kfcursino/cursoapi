@@ -148,6 +148,16 @@ class UserServiceImplTest {
     }
 
     @Test
+    void deleteWithSuccess() {
+        when(repository.findById(anyInt())).thenReturn(optionalUser);
+        doNothing().when(repository).deleteById(anyInt());
+
+        service.delete(ID);
+
+        verify(repository, times(1)).deleteById(anyInt());
+    }
+
+    @Test
     void deleteWithObjectNotFoundException() {
         when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
 
@@ -159,10 +169,6 @@ class UserServiceImplTest {
         }
     }
 
-    @Test
-    void deleteWithSuccess() {
-
-    }
     private void starUser() {
         user = new Users(ID, NAME, EMAIL, PASSWORD);
         userDTO = new UsersDTO(ID, NAME, EMAIL, PASSWORD);
