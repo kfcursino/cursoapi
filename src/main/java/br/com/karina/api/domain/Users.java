@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 //@EqualsAndHashCode
 @Entity
 public class Users {
