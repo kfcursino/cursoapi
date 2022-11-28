@@ -3,12 +3,10 @@ package br.com.karina.api.resources;
 import br.com.karina.api.domain.Users;
 import br.com.karina.api.domain.dto.UsersDTO;
 import br.com.karina.api.services.impl.UserServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,8 +39,8 @@ class UserResourceTest {
     @Mock
     private ModelMapper mapper;
 
-    private Users user;
-    private UsersDTO userDTO;
+    private Users user = new Users();
+    private UsersDTO userDTO = new UsersDTO();
 
     @BeforeEach
     void setUp() {

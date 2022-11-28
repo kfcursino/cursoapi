@@ -1,6 +1,5 @@
 package br.com.karina.api.resources;
 
-import br.com.karina.api.domain.Users;
 import br.com.karina.api.domain.dto.UsersDTO;
 import br.com.karina.api.services.UserService;
 import org.modelmapper.ModelMapper;

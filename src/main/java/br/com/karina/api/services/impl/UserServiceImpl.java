@@ -6,7 +6,6 @@ import br.com.karina.api.repositories.UserRepository;
 import br.com.karina.api.services.UserService;
 import br.com.karina.api.services.exceptions.DataIntegratyViolationException;
 import br.com.karina.api.services.exceptions.ObjectNotFoundException;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
